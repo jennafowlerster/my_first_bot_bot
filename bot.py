@@ -1,7 +1,7 @@
 import xlrd
 YEARS = [2014, 2016]
 MONEY_KEY = 'Tran_Amt1'
-
+ZIP_CODE_IDX = 22
 
 def get_year_records(year):
 
@@ -22,7 +22,7 @@ def get_year_zipcode_records(year, zipcode):
 
     newdata = []
     for row in data:
-        if row[23] == zipcodestr:
+        if row[ZIP_CODE_IDX] == zipcodestr:
             d = dict(zip(headers, row))
             newdata.append(d)
 
