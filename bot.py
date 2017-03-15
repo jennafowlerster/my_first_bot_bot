@@ -1,7 +1,13 @@
 import xlrd
 YEARS = [2014, 2016]
 MONEY_KEY = 'Tran_Amt1'
+<<<<<<< Updated upstream
 ZIP_CODE_IDX = 22
+=======
+ZIP_CODE_NUM = 22
+
+
+>>>>>>> Stashed changes
 
 def get_year_records(year):
 
@@ -22,7 +28,11 @@ def get_year_zipcode_records(year, zipcode):
 
     newdata = []
     for row in data:
+<<<<<<< Updated upstream
         if row[ZIP_CODE_IDX] == zipcodestr:
+=======
+        if row[ZIP_CODE_NUM] == zipcodestr:
+>>>>>>> Stashed changes
             d = dict(zip(headers, row))
             newdata.append(d)
 
