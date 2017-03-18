@@ -1,8 +1,8 @@
 import xlrd
+from sys import argv
 YEARS = [2014, 2016]
 MONEY_KEY = 'Tran_Amt1'
 ZIP_CODE_NUM = 22
-
 
 def get_year_records(year):
 
@@ -36,7 +36,7 @@ def get_zipcode_records(zipcode):
     return records
 
 def make_story(zipcode, year_records):
-    thestory = "The zipcode of: " + str(zipcode) + "\n"
+    thestory = "The zip code of: " + str(zipcode) + "\n"
     for year, rows in year_records.items():
         year_total = 0
         for row in rows:
@@ -49,8 +49,14 @@ def make_story(zipcode, year_records):
 def bot(zipcode):
     records = get_zipcode_records(zipcode)
     story = make_story(zipcode, records)
-    print(story)
+    return story
 
 
 if __name__ == '__main__':
-    bot(94306)
+
+    if len(argv) < 2:
+        print("You must enter a zip code as an argument!")
+    else:
+        zipcode = argv[1]
+        txt = bot(zipcode)
+        print(txt)
