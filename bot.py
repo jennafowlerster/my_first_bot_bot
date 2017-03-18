@@ -1,7 +1,9 @@
 import xlrd
 from sys import argv
+
 YEARS = [2014, 2016]
 MONEY_KEY = 'Tran_Amt1'
+MONEY_COLUMN_NUM = 29
 ZIP_CODE_NUM = 22
 
 def get_year_records(year):
@@ -36,21 +38,36 @@ def get_zipcode_records(zipcode):
     return records
 
 def make_story(zipcode, year_records):
-    thestory = "The zip code of: " + str(zipcode) + "\n"
+    thestory = "Among donors in: " + str(zipcode) + "\n"
+
     for year, rows in year_records.items():
         year_total = 0
+
         for row in rows:
             year_total += row[MONEY_KEY]
 
-        thestory += "In {year}, {amount} was raised.\n".format(year=year, amount=year_total)
+        print "In {year}, {amount} was contributed towards the Palo Alto city council race in your zip code.".format(year=year, amount=year_total)
+        contr = total_contributions(year)
+        print "In {year}, {amount} was raised in all zips in total".format(year=year, amount=contr)
 
-    return thestory
+
+def total_contributions(year):
+
+    contr_total = 0
+    data = get_year_records(year)[1:]
+    for row in data:
+
+        row_contr = row[MONEY_COLUMN_NUM]
+
+        if row_contr:
+            contr_total += row_contr
+
+    return contr_total
 
 def bot(zipcode):
     records = get_zipcode_records(zipcode)
     story = make_story(zipcode, records)
     return story
-
 
 if __name__ == '__main__':
 
@@ -58,5 +75,4 @@ if __name__ == '__main__':
         print("You must enter a zip code as an argument!")
     else:
         zipcode = argv[1]
-        txt = bot(zipcode)
-        print(txt)
+        bot(zipcode)
